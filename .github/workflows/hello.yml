@@ -1,18 +1,14 @@
-name: Hello World Workflow
+name: Manual Workflow
 
 on:
-  push:
-    branches: [ "main" ]
+  workflow_dispatch:
 
 jobs:
-  say-hello:
+  first-workflow:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v4
-
-      - name: Print Hello Message
-        run: echo "Hello from my local PC via Git push!"
-
-      - name: Print Timestamp
-        run: date
+      - name: First step
+        run: |
+          echo "Hello, World!"
+          echo "Hello Again!"
