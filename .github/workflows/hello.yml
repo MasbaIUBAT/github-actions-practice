@@ -1,14 +1,25 @@
-name: Manual Workflow
+name: Two Jobs Push Workflow
 
+# Trigger automatically whenever you push code to the main branch
 on:
-  workflow_dispatch:
+  push:
+    branches: [ "main" ]
 
 jobs:
-  first-workflow:
+  job-one:
     runs-on: ubuntu-latest
-
     steps:
-      - name: First step
-        run: |
-          echo "Hello, World!"
-          echo "Hello Again!"
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Print from Job One
+        run: echo "I am from the first job"
+
+  job-two:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Print from Job Two
+        run: echo "I am from the second job"
