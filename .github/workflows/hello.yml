@@ -1,28 +1,30 @@
-name: Dependent Multi Jobs Workflow
+name: Value Pass Workflow
 
 on:
   workflow_dispatch:
+    inputs:
+      name:
+        description: 'Enter your name'
+        required: true
+        default: 'Unnamed'
 
 jobs:
-  first-workflow-job:
+  get-value-workflow-job:
     runs-on: ubuntu-latest
+    outputs:
+      greeting: ${{ steps.generate-message.outputs.my_greeting }}
+    
     steps:
-      - name: First Workflow Job
+      - name: Generate Greetings Message
+        id: generate-message
         run: |
-          echo "Hello, First Workflow!"
+          echo "my_greeting=Hello, ${{ github.event.inputs.name }}!" >> $GITHUB_OUTPUT
 
-  second-workflow-jobs:
+  print-value-workflow-job:
     runs-on: ubuntu-latest
-    needs: [first-workflow-job]
-    steps:
-      - name: Second Workflow Job
-        run: |
-          echo "Hello, Second Workflow!"
+    needs: [get-value-workflow-job]
 
-  third-workflow-jobs:
-    runs-on: ubuntu-latest
-    needs: [first-workflow-job, second-workflow-jobs]
     steps:
-      - name: Third Workflow Job
+      - name: Print Greetings Message
         run: |
-          echo "Hello, Third Workflow!"
+          echo "${{ needs.get-value-workflow-job.outputs.greeting }}"
