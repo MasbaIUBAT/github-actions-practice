@@ -12,7 +12,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Print Hello Message
-        run: echo "Hello, World! Welcome to GitHub Actions."
+        run: echo "Hello from my local PC via Git push!"
 
       - name: Print Timestamp
         run: date
